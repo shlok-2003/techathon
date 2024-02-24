@@ -13,7 +13,8 @@ export const Login = () => {
                     <Typography
                         variant="h3"
                         className="text-rich-black-5 text-3xl font-semibold leading-9">
-                        Welcome Back
+                        Welcome to ImpactAura ! 
+                        <br />Here every action counts towards a better world!
                     </Typography>
 
                     <Typography
