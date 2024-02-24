@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AiOutlineEye, AiOutlineEyeInvisible } from '@/icons';
+import { useNavigate } from "react-router";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "@/icons";
 
-import { Button } from '@components/common/button';
-import { Box, Wrapper } from '@components/common/containers';
+import { Button } from "@components/common/button";
+import { Box, Wrapper } from "@components/common/containers";
+
+import { auth, firestore } from "@/firebase/firebase";
 
 type formProps = {
     firstName: string;
@@ -14,6 +19,7 @@ type formProps = {
 };
 
 export const SignUpForm = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
     const {
@@ -29,7 +35,38 @@ export const SignUpForm = () => {
     };
 
     const submitSignUpForm = async (data: formProps) => {
-        
+        try {
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                data.email,
+                data.password,
+            );
+            const user = userCredential.user;
+
+            await updateProfile(user, {
+                displayName: `${data.firstName} ${data.lastName}`,
+            });
+
+            const userDocRef = doc(firestore, "user", user.uid);
+            await setDoc(userDocRef, {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                merits: 0,
+                certificates: 0,
+                socialImpacts: 0,
+                efforts: 0,
+                profileImg:
+                    "https://cdn.britannica.com/92/215392-050-96A4BC1D/Australian-actor-Chris-Hemsworth-2019.jpg" ||
+                    null,
+            });
+
+            localStorage.setItem("token", user.uid);
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/dashboard");
+        } catch (error) {
+            console.error(error);
+        }
+
         reset();
     };
 
@@ -44,10 +81,10 @@ export const SignUpForm = () => {
                         <input
                             type="text"
                             id="firstName"
-                            {...register('firstName', {
+                            {...register("firstName", {
                                 required: {
                                     value: true,
-                                    message: 'First Name is required',
+                                    message: "First Name is required",
                                 },
                             })}
                             placeholder="First Name"
@@ -67,10 +104,10 @@ export const SignUpForm = () => {
                         <input
                             type="text"
                             id="lastName"
-                            {...register('lastName', {
+                            {...register("lastName", {
                                 required: {
                                     value: true,
-                                    message: 'Last Name is required',
+                                    message: "Last Name is required",
                                 },
                             })}
                             placeholder="Last Name"
@@ -91,10 +128,10 @@ export const SignUpForm = () => {
                     <input
                         type="email"
                         id="email"
-                        {...register('email', {
+                        {...register("email", {
                             required: {
                                 value: true,
-                                message: 'Enter your email',
+                                message: "Enter your email",
                             },
                         })}
                         placeholder="Enter your email address"
@@ -113,12 +150,12 @@ export const SignUpForm = () => {
                     </label>
                     <Wrapper className="relative flex w-full flex-1 items-center">
                         <input
-                            type={showPassword ? 'text' : 'password'}
+                            type={showPassword ? "text" : "password"}
                             id="password"
-                            {...register('password', {
+                            {...register("password", {
                                 required: {
                                     value: true,
-                                    message: 'Enter your Password',
+                                    message: "Enter your Password",
                                 },
                             })}
                             placeholder="Enter your password"
@@ -126,8 +163,7 @@ export const SignUpForm = () => {
                         />
                         <Wrapper
                             onClick={togglePassword}
-                            className="text-rich-black-25 absolute right-0 z-[10] cursor-pointer pr-2 text-2xl"
-                        >
+                            className="text-rich-black-25 absolute right-0 z-[10] cursor-pointer pr-2 text-2xl">
                             {showPassword ? (
                                 <AiOutlineEyeInvisible />
                             ) : (
@@ -149,11 +185,11 @@ export const SignUpForm = () => {
                     <input
                         type="password"
                         id="confirmPassword"
-                        {...register('confirmPassword', {
+                        {...register("confirmPassword", {
                             required: true,
                             validate: (value) =>
-                                value === getValues('password') ||
-                                'Passwords do not match',
+                                value === getValues("password") ||
+                                "Passwords do not match",
                         })}
                         placeholder="Enter your password"
                         className="custom-input-field w-full flex-1 indent-2 text-base font-normal"
@@ -168,8 +204,7 @@ export const SignUpForm = () => {
                 <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="text-rich-black-900 bg-rich-yellow-50 disabled:bg-rich-black-300 disabled:text-rich-black-5 flex select-none flex-col items-stretch justify-center overflow-hidden rounded-md px-2 py-3 font-bold hover:scale-[0.99]"
-                >
+                    className="text-rich-black-900 bg-rich-yellow-50 disabled:bg-rich-black-300 disabled:text-rich-black-5 flex select-none flex-col items-stretch justify-center overflow-hidden rounded-md px-2 py-3 font-bold hover:scale-[0.99]">
                     Create Account
                 </Button>
             </Box>
