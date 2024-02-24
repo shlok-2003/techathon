@@ -22,6 +22,7 @@ export default {
                 sans: ["Inter", ...defaultTheme.fontFamily.sans],
                 playfair: ["Edu SA Beginner", ...defaultTheme.fontFamily.sans],
                 mono: ["Roboto Mono", ...defaultTheme.fontFamily.mono],
+                anta: ["Anta", ...defaultTheme.fontFamily.sans]
             },
         },
 
