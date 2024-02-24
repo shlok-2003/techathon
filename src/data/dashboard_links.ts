@@ -23,7 +23,7 @@ export const DASHBOARD_SIDEBAR_LINKS: DashboardProps[] = [
     {
         key: "userProfile",
         label: "User Profile",
-        path: "/dashboard/profile/:id",
+        path: "/dashboard/profile",
         icon: HiOutlineCube,
     },
     {

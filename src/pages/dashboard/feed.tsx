@@ -19,13 +19,13 @@ const postData = [
         text: "This is a post",
     },
     {
-        id: 1,
+        id: 2,
         username: "John Doe",
         image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
         text: "This is a post",
     },
     {
-        id: 1,
+        id: 3,
         username: "John Doe",
         image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
         text: "This is a post",
@@ -65,7 +65,7 @@ export default function Feed() {
                                 key={index}
                                 className="flex flex-col gap-4 lg:w-[500px] md:w-[300px] w-[150px]">
                                 <CardHeader>
-                                    <Link to={`/profile/${post?.id}`}>
+                                    <Link to={`/dashboard/profile/${post?.id}`}>
                                         {post?.username}
                                     </Link>
                                     <img src={post.image} alt="post" />

@@ -1,12 +1,12 @@
 import {
-    BarChart,
-    Bar,
+    LineChart,
+    ResponsiveContainer,
+    Legend,
+    Tooltip,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
 } from "recharts";
 
 const data: {
@@ -82,7 +82,7 @@ export default function TransactionChart() {
             <strong className="text-gray-700 font-medium">Transactions</strong>
             <div className="mt-3 w-full flex-1 text-xs">
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
+                    <LineChart
                         width={500}
                         height={300}
                         data={data}
@@ -100,9 +100,9 @@ export default function TransactionChart() {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Merits" fill="#0ea5e9" />
-                        <Bar dataKey="Likes" fill="#ea580c" />
-                    </BarChart>
+                        <Line dataKey="Merits" fill="#0ea5e9" />
+                        <Line dataKey="Likes" fill="#ea580c" />
+                    </LineChart>
                 </ResponsiveContainer>
             </div>
         </div>

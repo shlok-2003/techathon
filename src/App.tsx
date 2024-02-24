@@ -84,6 +84,15 @@ const router = createBrowserRouter(
                 />
 
                 <Route
+                    path="profile"
+                    element={
+                        <Loading>
+                            <Profile />
+                        </Loading>
+                    }
+                />
+
+                <Route
                     path="profile/:id"
                     element={
                         <Loading>
