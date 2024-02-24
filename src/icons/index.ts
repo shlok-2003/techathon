@@ -19,17 +19,27 @@ import {
 
 import { FiUsers, FiArrowRight } from 'react-icons/fi';
 
-import { HiOutlineMenuAlt1 } from 'react-icons/hi';
+import {
+    HiOutlineMenuAlt1,
+    HiOutlineViewGrid,
+    HiOutlineCube,
+    HiOutlineShoppingCart,
+    HiOutlineUsers,
+    HiOutlineDocumentText,
+    HiOutlineAnnotation,
+    HiOutlineQuestionMarkCircle,
+    HiOutlineCog,
+} from "react-icons/hi";
 
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-import { BiWorld, BiArrowBack } from 'react-icons/bi';
+import { BiWorld, BiArrowBack } from "react-icons/bi";
 
-import { HiChatBubbleLeftRight } from 'react-icons/hi2';
+import { HiChatBubbleLeftRight } from "react-icons/hi2";
 
-import { IoCall } from 'react-icons/io5';
+import { IoCall, IoBagHandle, IoPieChart, IoPeople } from "react-icons/io5";
 
-import { ImTree } from 'react-icons/im';
+import { ImTree } from "react-icons/im";
 
 export {
     FiUsers,
@@ -40,12 +50,23 @@ export {
     FaTwitter,
     FaInstagram,
     HiOutlineMenuAlt1,
+    HiOutlineViewGrid,
+    HiOutlineCube,
+    HiOutlineShoppingCart,
+    HiOutlineUsers,
+    HiOutlineDocumentText,
+    HiOutlineAnnotation,
+    HiOutlineQuestionMarkCircle,
+    HiOutlineCog,
     HiChatBubbleLeftRight,
     AiOutlineEye,
     AiOutlineEyeInvisible,
     BiWorld,
     BiArrowBack,
     IoCall,
+    IoBagHandle,
+    IoPieChart,
+    IoPeople,
     ImTree,
     VscVm,
     VscAdd,
