@@ -1,4 +1,4 @@
-import image from "/assets/images/img1.webp";
+import image from "/assets/images/login.webp";
 
 
 import { LoginForm } from "@components/core/auth/";
