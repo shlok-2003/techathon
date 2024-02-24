@@ -40,16 +40,4 @@ export const DASHBOARD_SIDEBAR_LINKS: DashboardProps[] = [
         path: "/dashboard/certificate",
         icon: HiOutlineUsers,
     },
-    {
-        key: "transactions",
-        label: "Transactions",
-        path: "/transactions",
-        icon: HiOutlineDocumentText,
-    },
-    {
-        key: "messages",
-        label: "Messages",
-        path: "/messages",
-        icon: HiOutlineAnnotation,
-    },
 ];
