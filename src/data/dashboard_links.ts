@@ -3,8 +3,6 @@ import {
     HiOutlineCube,
     HiOutlineShoppingCart,
     HiOutlineUsers,
-    HiOutlineDocumentText,
-    HiOutlineAnnotation,
 } from "@/icons";
 import { IconType } from "react-icons";
 
@@ -25,7 +23,7 @@ export const DASHBOARD_SIDEBAR_LINKS: DashboardProps[] = [
     {
         key: "userProfile",
         label: "User Profile",
-        path: "/dashboard/profile",
+        path: "/dashboard/profile/:id",
         icon: HiOutlineCube,
     },
     {

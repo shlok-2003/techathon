@@ -1,5 +1,6 @@
 import image from "/assets/images/login.webp";
 
+
 import { LoginForm } from "@components/core/auth/";
 import { Typography } from "@components/common/typography";
 import { Box, Main, Section, Wrapper } from "@/components/ui/common/containers";

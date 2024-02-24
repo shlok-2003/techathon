@@ -1,7 +1,7 @@
 import {
-    BuyerProfilePieChart,
+    UserProfilePieChart,
     DashboardStatsGrid,
-    PopularProducts,
+    Leaderboard,
     TransactionChart,
 } from "@components/core/dashboard";
 
@@ -11,10 +11,10 @@ export default function Dashboard() {
             <DashboardStatsGrid />
             <div className="flex flex-row gap-4 w-full">
                 <TransactionChart />
-                <BuyerProfilePieChart />
+                <UserProfilePieChart />
             </div>
             <div className="flex flex-row gap-4 w-full">	
-                <PopularProducts />
+                <Leaderboard />
             </div>
         </div>
     );
