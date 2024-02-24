@@ -40,4 +40,8 @@
     form label.important  {
         @apply after:content-['*'] after:text-red-500 after:ml-1 after:text-sm;
     }
+
+    a {
+        @apply text-inherit;
+    }
 }
