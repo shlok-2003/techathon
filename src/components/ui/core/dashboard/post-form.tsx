@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@components/common/button";
 import { Section, Box, Wrapper } from "@components/common/containers";
@@ -8,14 +9,20 @@ import {
     DialogTrigger,
 } from "@components/common/dialog";
 
-// import { app } from "@/firebase/firebase";
+import { firestore, storage } from "@/firebase/firebase";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+
+import { toast } from "react-hot-toast";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 interface formProps {
     postText: string;
-    picture: FileList;
+    picture: string;
 }
 
 function Form() {
+    const [imageUrl, setImageUrl] = useState<string>("");
+
     const {
         register,
         reset,
@@ -23,23 +30,62 @@ function Form() {
         formState: { errors, isSubmitting },
     } = useForm<formProps>();
 
-    const submitPostForm = (data: formProps) => {
-        console.log("Data", data);
-        //! Data is entered here
-        reset();
+    const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files === null || e.target.files === undefined) return;
+
+        const file = e.target.files[0];
+        const storageRef = ref(storage, "post-images");
+
+        await uploadBytes(storageRef, file);
+        const imageUrl = await getDownloadURL(storageRef);
+        setImageUrl(imageUrl);
+
+        toast.success("Image uploaded successfully", {
+            position: "bottom-right",
+        });
     };
 
-    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     if (e.target.files === null || e.target.files === undefined) return;
+    const submitPostForm = async (data: formProps) => {
+        const { postText } = data;
 
-    //     const file = e.target.files[0];
-    //     const storageRef = app.storage().ref();
-    //     const fileRef = storageRef.child(file.name);
+        try {
+            const userId = localStorage.getItem("token");
 
-    //     fileRef.put(file).then(() => {
-    //         console.log("Uploaded a file");
-    //     });
-    // };
+            if (userId === null) {
+                toast.error("User not found", {
+                    position: "bottom-right",
+                });
+                return;
+            }
+
+            const userDocRef = doc(firestore, "user", userId);
+
+            await updateDoc(userDocRef, {
+                post: arrayUnion({
+                    postText,
+                    picture: imageUrl,
+                    likes: 0,
+                    uid: userId,
+                }),
+            });
+
+            toast.success("Post added successfully", {
+                position: "bottom-right",
+            });
+
+            window.location.replace("/dashboard");
+            reset();
+        } catch (error) {
+            const errorObject = {
+                code: (error as Error).name,
+                message: (error as Error).message,
+            };
+
+            toast.error(`${errorObject.message?.toString()}`, {
+                position: "bottom-right",
+            });
+        }
+    };
 
     return (
         <Box className="grid gap-4 py-4">
@@ -79,7 +125,7 @@ function Form() {
                                         "The post picture is required. Please upload a picture.",
                                 },
                             })}
-                            // onChange={handleChange}
+                            onChange={handleChange}
                             className="custom-input-field h-min w-full flex-1 indent-2 text-base font-normal"
                         />
                         {errors.picture && (

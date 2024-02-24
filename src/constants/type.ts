@@ -1,8 +1,8 @@
 export interface PostProps {
-    userUrl: string;
-    content: string;
+    uid: string;
+    postText: string;
     likes: number;
-    image: string;
+    picture: string;
 }
 
 export interface CertificateProps {

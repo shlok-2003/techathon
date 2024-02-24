@@ -13,17 +13,20 @@ export const Login = () => {
                     <Typography
                         variant="h3"
                         className="text-rich-black-5 text-3xl font-semibold leading-9">
-                        Welcome Back
+                        Welcome to ImpactAura !
+                        <br />
+                        Here every action counts towards a better world...
                     </Typography>
 
                     <Typography
                         variant="p"
                         className="mt-4 text-lg leading-6 [&>*]:block">
                         <Wrapper className="text-rich-black-100">
-                            Build skills for today, tomorrow, and beyond.
+                            Empower your impact journey with every step you
+                            take🤎
                         </Wrapper>
-                        <Wrapper className="font-edu-sa text-pure-blue-100 font-bold italic">
-                            Education to future-proof your career.
+                        <Wrapper className="font-edu-Sa text-pure-blue-100 font-bold italic">
+                            Drive change, one step at a time 💪🏻
                         </Wrapper>
                     </Typography>
 
