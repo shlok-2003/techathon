@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "@/icons";
 
 import { Button } from "@components/common/button";
 import { Box, Wrapper } from "@components/common/containers";
 
-import { auth } from "@/firebase/firebase";
+import { auth, firestore } from "@/firebase/firebase";
 
 type formProps = {
     firstName: string;
@@ -40,7 +41,27 @@ export const SignUpForm = () => {
                 data.email,
                 data.password,
             );
-            console.log(userCredential);
+            const user = userCredential.user;
+
+            await updateProfile(user, {
+                displayName: `${data.firstName} ${data.lastName}`,
+            });
+
+            const userDocRef = doc(firestore, "user", user.uid);
+            await setDoc(userDocRef, {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                merits: 0,
+                certificates: 0,
+                socialImpacts: 0,
+                efforts: 0,
+                profileImg:
+                    "https://cdn.britannica.com/92/215392-050-96A4BC1D/Australian-actor-Chris-Hemsworth-2019.jpg" ||
+                    null,
+            });
+
+            localStorage.setItem("token", user.uid);
+            localStorage.setItem("user", JSON.stringify(user));
             navigate("/dashboard");
         } catch (error) {
             console.error(error);
