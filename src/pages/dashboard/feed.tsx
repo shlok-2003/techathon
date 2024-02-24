@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 import { PostForm } from "@components/core/dashboard";
 import { FaHeart } from "@/icons";
@@ -11,70 +13,75 @@ import {
     CardTitle,
 } from "@components/common/card";
 
-const postData = [
-    {
-        id: 1,
-        username: "John Doe",
-        image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
-        text: "This is a post",
-    },
-    {
-        id: 2,
-        username: "John Doe",
-        image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
-        text: "This is a post",
-    },
-    {
-        id: 3,
-        username: "John Doe",
-        image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
-        text: "This is a post",
-    },
-    {
-        id: 1,
-        username: "John Doe",
-        image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
-        text: "This is a post",
-    },
-    {
-        id: 1,
-        username: "John Doe",
-        image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
-        text: "This is a post",
-    },
-    {
-        id: 1,
-        username: "John Doe",
-        image: "https://media.istockphoto.com/id/1691437841/photo/african-american-student-wearing-eyeglasses-holding-finger-near-face-looking-for-creative.jpg?s=2048x2048&w=is&k=20&c=igLAjgoXGEVvHavAUMHxeez4K2h852HH1tMTBbHuZQk=",
-        text: "This is a post",
-    },
-];
+import { firestore } from "@/firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+
+import { toast } from "react-hot-toast";
+import { PostProps } from "@/constants/type";
 
 export default function Feed() {
+    const [posts, setPosts] = useState<PostProps[]>([]);
+
+    useEffect(() => {
+        async function fetchPosts() {
+            try {
+                const userId = localStorage.getItem("token");
+
+                if (userId === null) {
+                    toast.error("User not found", {
+                        position: "bottom-right",
+                    });
+                    return;
+                }
+
+                const userDocRef = doc(firestore, "user", userId);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    setPosts(userData?.post);
+                }
+
+                toast.success("Posts fetched successfully", {
+                    position: "bottom-right",
+                });
+            } catch (error) {
+                toast.error("Failed to fetch posts", {
+                    position: "bottom-right",
+                });
+            }
+        }
+
+        fetchPosts();
+    }, []);
+
+    console.log(posts);
+
     return (
         <Main className="space-y-6">
             <Section>
-                {/* User post data in this component */}
                 <PostForm />
             </Section>
             <Section className="flex flex-col justify-center items-center">
                 <Box>
                     <Box className="flex flex-col self-center gap-10">
-                        {postData.map((post, index) => (
+                        {posts.map((post, index) => (
                             <Card
                                 key={index}
                                 className="flex flex-col gap-4 lg:w-[500px] md:w-[300px] w-[150px]">
                                 <CardHeader>
-                                    <Link to={`/dashboard/profile/${post?.id}`}>
-                                        {post?.username}
+                                    <Link
+                                        to={`/dashboard/profile/${post?.uid}`}>
+                                        Click to view User
                                     </Link>
-                                    <img src={post.image} alt="post" />
+                                    <img src={post.picture} alt="post" />
                                 </CardHeader>
                                 <CardContent>
-                                    <CardTitle>{post.text}</CardTitle>
+                                    <CardTitle>{post.postText}</CardTitle>
                                 </CardContent>
                                 <CardFooter>
                                     <FaHeart className="text-red-500 cursor-pointer" />
+                                    <span>{post.likes}</span>
                                 </CardFooter>
                             </Card>
                         ))}

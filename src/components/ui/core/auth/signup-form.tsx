@@ -8,7 +8,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "@/icons";
 import { Button } from "@components/common/button";
 import { Box, Wrapper } from "@components/common/containers";
 
+import { FirebaseError } from "firebase/app";
 import { auth, firestore } from "@/firebase/firebase";
+
+import { toast } from "react-hot-toast";
 
 type formProps = {
     firstName: string;
@@ -27,6 +30,7 @@ export const SignUpForm = () => {
         register,
         handleSubmit,
         getValues,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<formProps>();
 
@@ -51,23 +55,37 @@ export const SignUpForm = () => {
             await setDoc(userDocRef, {
                 firstName: data.firstName,
                 lastName: data.lastName,
+                followers: 0,
                 merits: 0,
-                certificates: 0,
+
                 socialImpacts: 0,
-                efforts: 0,
                 profileImg:
                     "https://cdn.britannica.com/92/215392-050-96A4BC1D/Australian-actor-Chris-Hemsworth-2019.jpg" ||
                     null,
+                post: [],
+                certificates: [],
             });
 
-            localStorage.setItem("token", user.uid);
-            localStorage.setItem("user", JSON.stringify(user));
-            navigate("/dashboard");
+            toast.success("Account created successfully", {
+                position: "bottom-right",
+            });
+            navigate("/login");
+            reset();
         } catch (error) {
-            console.error(error);
-        }
+            const errorObject = {
+                code: (error as FirebaseError).code,
+                message: (error as FirebaseError).message,
+            };
 
-        reset();
+            setError("email", {
+                type: "manual",
+                message: errorObject.message,
+            });
+
+            toast.error("Invalid email or password", {
+                position: "bottom-right",
+            });
+        }
     };
 
     return (

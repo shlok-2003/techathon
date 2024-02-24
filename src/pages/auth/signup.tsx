@@ -11,21 +11,18 @@ export const Login = () => {
                 <Box className="mx-auto">
                     <Typography
                         variant="h3"
-                        className="text-rich-black-5 text-3xl font-semibold leading-9"
-                    >
-                        Join the millions learning to code with StudyNotion for
-                        free
+                        className="text-rich-black-5 text-3xl font-semibold leading-9">
+                        Elevate your impact. Join ImpactAura today!
                     </Typography>
 
                     <Typography
                         variant="p"
-                        className="mt-4 text-lg leading-6 [&>*]:block"
-                    >
+                        className="mt-4 text-lg leading-6 [&>*]:block">
                         <Wrapper className="text-rich-black-100">
-                            Build skills for today, tomorrow, and beyond.
+                            Start your journey towards a brighter tomorrow✨
                         </Wrapper>
                         <Wrapper className="font-edu-sa text-pure-blue-100 font-bold italic">
-                            Education to future-proof your career.
+                            Let's build a better world together🌎
                         </Wrapper>
                     </Typography>
 
