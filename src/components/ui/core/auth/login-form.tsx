@@ -8,6 +8,12 @@ import { Link } from "react-router-dom";
 import { Box, Wrapper } from "@components/common/containers";
 import { Button } from "@components/common/button";
 
+import { auth } from "@/firebase/firebase";
+import { FirebaseError } from "firebase/app";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { toast } from "react-hot-toast";
+
 type formProps = {
     email: string;
     password: string;
@@ -21,6 +27,7 @@ export const LoginForm = () => {
         reset,
         register,
         handleSubmit,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<formProps>();
 
@@ -29,8 +36,37 @@ export const LoginForm = () => {
     };
 
     const submitLoginForm = async (data: formProps) => {
-        navigate("/dashboard");
-        reset();
+        try {
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                data.email,
+                data.password,
+            );
+
+            const user = userCredential.user;
+            localStorage.setItem("token", user.uid);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            toast.success("Logged in successfully", {
+                position: "bottom-right",
+            });
+            navigate("/dashboard");
+            reset();
+        } catch (error) {
+            const errorObject = {
+                code: (error as FirebaseError).code,
+                message: (error as FirebaseError).message,
+            };
+
+            setError("password", {
+                type: "manual",
+                message: errorObject.message,
+            });
+
+            toast.error("Invalid email or password", {
+                position: "bottom-right",
+            });
+        }
     };
 
     return (
