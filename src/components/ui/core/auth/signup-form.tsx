@@ -55,13 +55,15 @@ export const SignUpForm = () => {
             await setDoc(userDocRef, {
                 firstName: data.firstName,
                 lastName: data.lastName,
+                followers: 0,
                 merits: 0,
-                certificates: 0,
+
                 socialImpacts: 0,
-                efforts: 0,
                 profileImg:
                     "https://cdn.britannica.com/92/215392-050-96A4BC1D/Australian-actor-Chris-Hemsworth-2019.jpg" ||
                     null,
+                post: [],
+                certificates: [],
             });
 
             toast.success("Account created successfully", {

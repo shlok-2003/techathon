@@ -5,10 +5,8 @@ import {
     createBrowserRouter,
     createRoutesFromChildren,
 } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { ColorRing } from 'react-loader-spinner';
-import { Box } from '@components/common/containers';
-import { ScrollToTop } from '@components/common/scroll-to-top';
+import { Toaster } from "react-hot-toast";
+import { ScrollToTop } from "@components/common/scroll-to-top";
 
 import { Main, DashboardLayout } from "@/layouts";
 const Home = lazy(() => import("@/pages/home"));
@@ -22,23 +20,14 @@ const Certificate = lazy(() => import("@/pages/dashboard/certificate"));
 
 const NotFound = lazy(() => import("@/pages/not-found"));
 
+import { Spinner } from "@components/common/spinner";
 import { OpenRoute, PrivateRoute } from "./routes";
 
 const Loading: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <Suspense
             fallback={
-                <Box className="bg-rich-black-900 flex min-h-screen items-center justify-center">
-                    <ColorRing
-                        colors={[
-                            "#ffffff",
-                            "#ffffff",
-                            "#ffffff",
-                            "#ffffff",
-                            "#ffffff",
-                        ]}
-                    />
-                </Box>
+                <Spinner className="bg-rich-black-900 flex min-h-screen items-center justify-center" />
             }>
             {children}
         </Suspense>
