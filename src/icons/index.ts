@@ -4,6 +4,7 @@ import {
     FaLinkedin,
     FaTwitter,
     FaInstagram,
+    FaHeart 
 } from 'react-icons/fa';
 
 import {
@@ -29,6 +30,7 @@ import {
     HiOutlineAnnotation,
     HiOutlineQuestionMarkCircle,
     HiOutlineCog,
+    HiOutlineLogout
 } from "react-icons/hi";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -44,6 +46,7 @@ import { ImTree } from "react-icons/im";
 export {
     FiUsers,
     FaStar,
+    FaHeart,
     FaChevronUp,
     FiArrowRight,
     FaLinkedin,
@@ -58,6 +61,7 @@ export {
     HiOutlineAnnotation,
     HiOutlineQuestionMarkCircle,
     HiOutlineCog,
+    HiOutlineLogout,
     HiChatBubbleLeftRight,
     AiOutlineEye,
     AiOutlineEyeInvisible,

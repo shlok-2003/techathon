@@ -3,8 +3,6 @@ import {
     HiOutlineCube,
     HiOutlineShoppingCart,
     HiOutlineUsers,
-    HiOutlineDocumentText,
-    HiOutlineAnnotation,
 } from "@/icons";
 import { IconType } from "react-icons";
 

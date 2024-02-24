@@ -1,7 +1,9 @@
+import { Box, Section } from "@components/common/containers";
+
 export default function Header() {
     return (
-        <>
-            This is the header
-        </>
-    )
+        <Section>
+            <Box>This is a Navbar</Box>
+        </Section>
+    );
 }
