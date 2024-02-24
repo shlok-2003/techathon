@@ -27,7 +27,7 @@ export default function Sidebar() {
 
         navigate("/login");
     };
-    x;
+
     return (
         <Section className="bg-neutral-900 w-60 p-3 flex flex-col">
             <Box className="flex items-center gap-2 px-1 py-3 select-none">
