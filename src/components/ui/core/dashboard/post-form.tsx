@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@components/common/button";
 import { Section, Box, Wrapper } from "@components/common/containers";
@@ -9,8 +8,7 @@ import {
     DialogTrigger,
 } from "@components/common/dialog";
 
-
-import { app } from "@/firebase";
+// import { app } from "@/firebase/firebase";
 
 interface formProps {
     postText: string;
@@ -26,22 +24,22 @@ function Form() {
     } = useForm<formProps>();
 
     const submitPostForm = (data: formProps) => {
-        console.log('Data', data);
+        console.log("Data", data);
         //! Data is entered here
         reset();
     };
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files === null || e.target.files === undefined) return;
+    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files === null || e.target.files === undefined) return;
 
-        const file = e.target.files[0];
-        const storageRef = app.storage().ref();
-        const fileRef = storageRef.child(file.name);
+    //     const file = e.target.files[0];
+    //     const storageRef = app.storage().ref();
+    //     const fileRef = storageRef.child(file.name);
 
-        fileRef.put(file).then(() => {
-            console.log("Uploaded a file");
-        });
-    };
+    //     fileRef.put(file).then(() => {
+    //         console.log("Uploaded a file");
+    //     });
+    // };
 
     return (
         <Box className="grid gap-4 py-4">
@@ -81,7 +79,7 @@ function Form() {
                                         "The post picture is required. Please upload a picture.",
                                 },
                             })}
-                            onChange={handleChange}
+                            // onChange={handleChange}
                             className="custom-input-field h-min w-full flex-1 indent-2 text-base font-normal"
                         />
                         {errors.picture && (
