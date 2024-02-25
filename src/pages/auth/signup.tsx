@@ -12,13 +12,12 @@ export const Login = () => {
                     <Typography
                         variant="h3"
                         className="text-rich-black-5 text-3xl font-semibold leading-9">
-                            Elevate your impact. Join ImpactAura today!
+                        Elevate your impact. Join ImpactAura today!
                     </Typography>
 
                     <Typography
                         variant="p"
-                        className="mt-4 text-lg leading-6 [&>*]:block"
-                    >
+                        className="mt-4 text-lg leading-6 [&>*]:block">
                         <Wrapper className="text-rich-black-100">
                             Start your journey towards a brighter tomorrow✨
                         </Wrapper>

@@ -5,10 +5,8 @@ import {
     createBrowserRouter,
     createRoutesFromChildren,
 } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import { ColorRing } from 'react-loader-spinner';
-import { Box } from '@components/common/containers';
-import { ScrollToTop } from '@components/common/scroll-to-top';
+import { Toaster } from "react-hot-toast";
+import { ScrollToTop } from "@components/common/scroll-to-top";
 
 import { Main, DashboardLayout } from "@/layouts";
 const Home = lazy(() => import("@/pages/home"));
@@ -22,21 +20,14 @@ const Certificate = lazy(() => import("@/pages/dashboard/certificate"));
 
 const NotFound = lazy(() => import("@/pages/not-found"));
 
+import { Spinner } from "@components/common/spinner";
+import { OpenRoute, PrivateRoute } from "./routes";
+
 const Loading: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <Suspense
             fallback={
-                <Box className="bg-rich-black-900 flex min-h-screen items-center justify-center">
-                    <ColorRing
-                        colors={[
-                            "#ffffff",
-                            "#ffffff",
-                            "#ffffff",
-                            "#ffffff",
-                            "#ffffff",
-                        ]}
-                    />
-                </Box>
+                <Spinner className="bg-rich-black-900 flex min-h-screen items-center justify-center" />
             }>
             {children}
         </Suspense>
@@ -59,7 +50,9 @@ const router = createBrowserRouter(
                     path="login"
                     element={
                         <Loading>
-                            <Login />
+                            <OpenRoute>
+                                <Login />
+                            </OpenRoute>
                         </Loading>
                     }
                 />
@@ -67,7 +60,9 @@ const router = createBrowserRouter(
                     path="signup"
                     element={
                         <Loading>
-                            <SignUp />
+                            <OpenRoute>
+                                <SignUp />
+                            </OpenRoute>
                         </Loading>
                     }
                 />
@@ -78,7 +73,9 @@ const router = createBrowserRouter(
                     index
                     element={
                         <Loading>
-                            <Dashboard />
+                            <PrivateRoute>
+                                <Dashboard />
+                            </PrivateRoute>
                         </Loading>
                     }
                 />
@@ -87,7 +84,9 @@ const router = createBrowserRouter(
                     path="profile"
                     element={
                         <Loading>
-                            <Profile />
+                            <PrivateRoute>
+                                <Profile />
+                            </PrivateRoute>
                         </Loading>
                     }
                 />
@@ -96,7 +95,9 @@ const router = createBrowserRouter(
                     path="profile/:id"
                     element={
                         <Loading>
-                            <Profile />
+                            <PrivateRoute>
+                                <Profile />
+                            </PrivateRoute>
                         </Loading>
                     }
                 />
@@ -105,7 +106,9 @@ const router = createBrowserRouter(
                     path="feed"
                     element={
                         <Loading>
-                            <Feed />
+                            <PrivateRoute>
+                                <Feed />
+                            </PrivateRoute>
                         </Loading>
                     }
                 />
@@ -114,7 +117,9 @@ const router = createBrowserRouter(
                     path="certificate"
                     element={
                         <Loading>
-                            <Certificate />
+                            <PrivateRoute>
+                                <Certificate />
+                            </PrivateRoute>
                         </Loading>
                     }
                 />
