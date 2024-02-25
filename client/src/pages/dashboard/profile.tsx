@@ -13,9 +13,38 @@ import { firestore } from "@/firebase/firebase";
 import { toast } from "react-hot-toast";
 import { UserType } from "@/constants/type";
 
+import { getMerits, getSocial } from "@/api/merits";
+
 export default function Profile() {
     const { id } = useParams();
-    const [user, setUser] = useState<UserType | null>(null);
+    const [user, setUser] = useState<UserType>();
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const userId = localStorage.getItem("token");
+
+            if (userId === null) {
+                toast.error("User not found", {
+                    position: "bottom-right",
+                });
+                return;
+            }
+
+            const SocialData = await getSocial({ uid: userId });
+            const MeritsData = await getMerits({ uid: userId });
+
+            if (SocialData?.success && MeritsData?.success) {
+                const userData = {
+                    merits: MeritsData.data,
+                    socialImpacts: SocialData.data,
+                };
+                setData(userData);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -43,16 +72,12 @@ export default function Profile() {
         };
 
         fetchUserData();
-
-        return () => {
-            setUser(null);
-        };
     }, []);
 
     return (
         <Main className="flex flex-col justify-center items-center">
             <Section className="flex flex-col gap-4 max-w-[800px]">
-                {user !== null ? (
+                {user !== null && user !== undefined ? (
                     <Card className="m-2">
                         <CardContent className="flex flex-row p-3 gap-10">
                             <Box className="flex-1 rounded-md overflow-hidden object-cover bg-red-100">
@@ -75,13 +100,13 @@ export default function Profile() {
                                         <Wrapper className="font-bold">
                                             Merits
                                         </Wrapper>
-                                        <Wrapper>{user.merits}</Wrapper>
+                                        <Wrapper>{data?.merits}</Wrapper>
                                     </Box>
                                     <Box className="flex flex-col items-start">
                                         <Wrapper className="font-bold">
                                             Social Impacts
                                         </Wrapper>
-                                        <Wrapper>{user.socialImpacts}</Wrapper>
+                                        <Wrapper>{data?.socialImpacts}</Wrapper>
                                     </Box>
                                     <Box className="flex flex-col items-start">
                                         <Wrapper className="font-bold">

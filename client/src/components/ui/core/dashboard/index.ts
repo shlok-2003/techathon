@@ -3,4 +3,3 @@ export { default as DashboardStatsGrid } from "./dashboard-stats-grid";
 export { default as Leaderboard } from "./leaderboard";
 export { default as TransactionChart } from "./transaction-chart";
 export { default as PostForm } from "./post-form";
-export { default as HeatMap } from "./heat-charts";

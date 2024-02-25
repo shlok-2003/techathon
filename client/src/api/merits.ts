@@ -1,17 +1,18 @@
 import axiosInstance from "./main";
 
-export const putParams = async (data: { uid: string; text: string }) => {
+export const getSocial = async (data: { uid: string }) => {
     try {
+        console.log("data", data);
         const response = await axiosInstance({
-            method: "POST",
-            path: "/postParams",
-            data,
+            method: "GET",
+            path: "/getSocial",
+            params: data,
         });
 
-        if (response?.data?.success) {
+        if (response.data.success) {
             return response.data;
         } else {
-            return response?.data?.message;
+            return response.data.message;
         }
     } catch (error) {
         console.error("Error:", error);
@@ -19,18 +20,18 @@ export const putParams = async (data: { uid: string; text: string }) => {
     }
 };
 
-export const getParams = async (data: { uid: string }) => {
+export const getMerits = async (data: { uid: string }) => {
     try {
         const response = await axiosInstance({
             method: "GET",
-            path: "/getParams",
+            path: "/getMerits",
             params: data,
         });
 
-        if (response?.data?.success) {
+        if (response.data.success) {
             return response.data;
         } else {
-            return response?.data?.message;
+            return response.data.message;
         }
     } catch (error) {
         console.error("Error:", error);

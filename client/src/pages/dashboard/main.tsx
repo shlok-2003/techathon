@@ -2,8 +2,7 @@ import {
     UserProfilePieChart,
     DashboardStatsGrid,
     Leaderboard,
-    // TransactionChart,
-    HeatMap,
+    TransactionChart,
 } from "@components/core/dashboard";
 
 export default function Dashboard() {
@@ -11,7 +10,7 @@ export default function Dashboard() {
         <div className="flex flex-col gap-4">
             <DashboardStatsGrid />
             <div className="flex flex-row gap-4 w-full">
-                <HeatMap />
+                <TransactionChart />
                 <UserProfilePieChart />
             </div>
             <div className="flex flex-row gap-4 w-full">

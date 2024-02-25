@@ -18,17 +18,13 @@ export const axiosAdvanced = async ({
     params,
 }: AxiosAdvancedProps) => {
     const url = "http://localhost:4000/api" + path;
-    console.log("url", url);
-
-    const token = window.localStorage.getItem("token");
 
     const config: AxiosRequestConfig = {
-        method: method || "GET",
+        method,
         url,
         data,
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
             ...headers,
         },
         params,
@@ -36,7 +32,6 @@ export const axiosAdvanced = async ({
 
     try {
         const response: AxiosResponse = await axiosInstance(config);
-
         return response;
     } catch (error) {
         const message =

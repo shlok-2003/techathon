@@ -5,10 +5,34 @@ const UserSchema = new mongoose.Schema(
         uid: {
             type: String,
             required: true,
-            trim: true,
         },
         parameters: {
-            type: Object,
+            type: {
+                merits: {
+                    type: Number,
+                    // required: true,
+                },
+                total_impacts: {
+                    type: Number,
+                    // required: true,
+                },
+                innovation: {
+                    type: Number,
+                    // required: true,
+                },
+                community_engagement: {
+                    type: Number,
+                    // required: true,
+                },
+                environmental_impact: {
+                    type: Number,
+                    // required: true,
+                },
+                efforts_taken: {
+                    type: Number,
+                    // required: true,
+                },
+            },
             required: true,
         },
     },

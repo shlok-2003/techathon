@@ -12,15 +12,15 @@ export const putParams = async (req, res) => {
         User's data to be analyzed: ${text}
 You are a sophisticated language model designed to evaluate user-provided texts. Your task is to assess the given text based on various parameters, providing a detailed analysis of the user's actions. Consider the following instructions and additional parameters:
 
-1. Merits (out of 100): Evaluate the positive impact of the user's actions on society. Award a score out of 5, with 5 being highly beneficial and 0 being no positive impact. Consider societal benefits, environmental impact, and overall positive contributions.
+1. Merits (out of 100): Evaluate the positive impact of the user's actions on society. Award a score out of 100, with 100 being highly beneficial and 0 being no positive impact. Consider societal benefits, environmental impact, and overall positive contributions.
 
-2. Efforts Taken (out of 100): Assess the efforts the user mentions in taking the action. Give a score out of 5, considering the scale, methods, and any challenges faced. Examine the level of commitment and dedication to the cause.
+2. Efforts Taken (out of 100): Assess the efforts the user mentions in taking the action. Give a score out of 100, considering the scale, methods, and any challenges faced. Examine the level of commitment and dedication to the cause.
 
 3. Environmental Impact (out of 100): Evaluate the user's actions in terms of their impact on the environment. Consider aspects like waste reduction, ecological sustainability, and conservation efforts.
 
 4. Community Engagement (out of 100): Assess the level of community involvement in the user's actions. Consider collaboration with local residents, engagement with community members, and the overall community impact.
 
-5. Innovation (out of 100): Evaluate the innovative aspects of the user's actions. Consider any creative solutions, novel approaches, or unique methods used in the process.
+100. Innovation (out of 100): Evaluate the innovative aspects of the user's actions. Consider any creative solutions, novel approaches, or unique methods used in the process.
 
 6. Total Impacts (out of 100): Calculate the total impacts using the formula: 
 
@@ -36,7 +36,7 @@ The parameters should be in the following format:
     merits: 80,
     efforts_taken: 90,
     environmental_impact: 67,
-    community_engagement: 59,
+    community_engagement: 1009,
     innovation: 96,
     total_impacts: apply the formula here
 }
@@ -71,12 +71,9 @@ Do not give me any kind of text as a response. Just give me the parameters along
 
 export const getParams = async (req, res) => {
     try {
-        console.log(req.body);
-        const { uid } = req.body;
+        const { uid } = req.query;
 
         const user = await User.find({ uid: uid });
-
-        console.log(user);
 
         if (!user) {
             return res.status(404).json({
@@ -87,7 +84,7 @@ export const getParams = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            data: user[0],
+            data: user,
         });
     } catch (error) {
         return res.status(500).json({
@@ -95,4 +92,4 @@ export const getParams = async (req, res) => {
             error: error.message,
         });
     }
-};
+}
