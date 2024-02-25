@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "name": "techathon",
     "private": true,
     "version": "0.0.0",
@@ -13,6 +12,7 @@
     "dependencies": {
         "@radix-ui/react-dialog": "^1.0.5",
         "@radix-ui/react-slot": "^1.0.2",
+        "axios": "^1.6.7",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
         "firebase": "^10.8.0",
@@ -43,12 +43,7 @@
         "postcss": "^8.4.35",
         "prettier": "^3.2.5",
         "tailwindcss": "^3.4.1",
-        "typescript": "^5.3.3",
+        "typescript": "^5.2.2",
         "vite": "^5.1.4"
     }
-=======
-  "dependencies": {
-    "react-apexcharts": "^1.4.1"
-  }
->>>>>>> 76f26e7dd28041effd5c16ae3450b587455583b2
 }

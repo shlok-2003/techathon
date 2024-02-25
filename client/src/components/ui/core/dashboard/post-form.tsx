@@ -15,6 +15,8 @@ import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { toast } from "react-hot-toast";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
+import { putParams } from "@/api/put-params";
+
 interface formProps {
     postText: string;
     picture: string;
@@ -59,6 +61,17 @@ function Form() {
             }
 
             const userDocRef = doc(firestore, "user", userId);
+            const cohere = await putParams({
+                uid: userId,
+                text: postText,
+            });
+
+            if (cohere.success === false) {
+                toast.error(cohere.message, {
+                    position: "bottom-right",
+                });
+                return;
+            }
 
             await updateDoc(userDocRef, {
                 post: arrayUnion({

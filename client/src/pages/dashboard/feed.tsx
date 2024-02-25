@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { PostForm } from "@components/core/dashboard";
 import { FaHeart } from "@/icons";
 
+import { cn } from "@/lib/utils";
+
 import { Box, Section, Main } from "@components/common/containers";
 import {
     Card,
@@ -14,13 +16,14 @@ import {
 } from "@components/common/card";
 
 import { firestore } from "@/firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 import { toast } from "react-hot-toast";
 import { PostProps } from "@/constants/type";
 
 export default function Feed() {
     const [posts, setPosts] = useState<PostProps[]>([]);
+    const [toggle, setToggle] = useState(false);
 
     useEffect(() => {
         async function fetchPosts() {
@@ -55,7 +58,50 @@ export default function Feed() {
         fetchPosts();
     }, []);
 
-    console.log(posts);
+    async function handleLike(index: number) {
+        try {
+            const userId = localStorage.getItem("token");
+
+            if (userId === null) {
+                toast.error("User not found", {
+                    position: "bottom-right",
+                });
+                return;
+            }
+
+            const userDocRef = doc(firestore, "user", userId);
+            const userDocSnap = await getDoc(userDocRef);
+
+            if (userDocSnap.exists()) {
+                const userData = userDocSnap.data();
+                const updatedPosts = userData?.post.map((p, idx) => {
+                    if (idx === index) {
+                        return {
+                            ...p,
+                            likes: toggle ? p.likes - 1 : p.likes + 1,
+                        };
+                    }
+                    return p;
+                });
+
+                await updateDoc(userDocRef, {
+                    post: updatedPosts,
+                });
+
+                setToggle((prevState) => !prevState);
+
+                toast.success("Post liked successfully", {
+                    position: "bottom-right",
+                });
+
+                setPosts(updatedPosts);
+            }
+        } catch (error) {
+            toast.error("Failed to fetch posts", {
+                position: "bottom-right",
+            });
+        }
+    }
 
     return (
         <Main className="space-y-6">
@@ -79,8 +125,14 @@ export default function Feed() {
                                 <CardContent>
                                     <CardTitle>{post.postText}</CardTitle>
                                 </CardContent>
-                                <CardFooter>
-                                    <FaHeart className="text-red-500 cursor-pointer" />
+                                <CardFooter className="flex gap-2">
+                                    <FaHeart
+                                        className={cn("cursor-pointer", {
+                                            "text-red-500": toggle,
+                                            "text-gray-500": !toggle,
+                                        })}
+                                        onClick={() => handleLike(index)}
+                                    />
                                     <span>{post.likes}</span>
                                 </CardFooter>
                             </Card>
