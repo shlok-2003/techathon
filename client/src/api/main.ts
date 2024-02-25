@@ -18,6 +18,7 @@ export const axiosAdvanced = async ({
     params,
 }: AxiosAdvancedProps) => {
     const url = "http://localhost:4000/api" + path;
+    console.log("url", url);
 
     const token = window.localStorage.getItem("token");
 

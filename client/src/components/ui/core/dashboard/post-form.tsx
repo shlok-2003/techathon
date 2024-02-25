@@ -66,7 +66,6 @@ function Form() {
                 text: postText,
             });
 
-            console.log("cohere", cohere);
             if (cohere.success === false) {
                 toast.error(cohere.message, {
                     position: "bottom-right",

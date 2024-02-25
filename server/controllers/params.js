@@ -68,3 +68,31 @@ Do not give me any kind of text as a response. Just give me the parameters along
         });
     }
 };
+
+export const getParams = async (req, res) => {
+    try {
+        console.log(req.body);
+        const { uid } = req.body;
+
+        const user = await User.find({ uid: uid });
+
+        console.log(user);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                error: 'User not found',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: user[0],
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+        });
+    }
+};

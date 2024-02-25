@@ -17,9 +17,6 @@ export default function Profile() {
     const { id } = useParams();
     const [user, setUser] = useState<UserType | null>(null);
 
-    const abortController = new AbortController();
-    const signal = abortController.signal;          // to be added
-
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -48,7 +45,6 @@ export default function Profile() {
         fetchUserData();
 
         return () => {
-            abortController.abort();
             setUser(null);
         };
     }, []);
