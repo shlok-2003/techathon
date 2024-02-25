@@ -58,3 +58,33 @@ export const getSocial = async (req, res) => {
         });
     }
 };
+
+export const getAllMerits = async (req, res) => {
+    try {
+        const userMerits = await User.aggregate([
+            {
+                $group: {
+                    _id: "$uid", // Group by uid
+                    totalMerits: { $sum: { $toInt: "$parameters.merits" } }, // Sum up merits
+                },
+            },
+        ]);
+
+        if (!userMerits) {
+            return res.status(404).json({
+                success: false,
+                error: 'Users not found',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: userMerits,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+        });
+    }
+}
