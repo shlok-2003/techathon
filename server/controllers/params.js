@@ -12,7 +12,7 @@ export const putParams = async (req, res) => {
         User's data to be analyzed: ${text}
 You are a sophisticated language model designed to evaluate user-provided texts. Your task is to assess the given text based on various parameters, providing a detailed analysis of the user's actions. Consider the following instructions and additional parameters:
 
-1. Merits (out of 100): Evaluate the positive impact of the user's actions on society. Award a score out of 100, with 100 being highly beneficial and 0 being no positive impact. Consider societal benefits, environmental impact, and overall positive contributions.
+1. Merits (out of 100): Evaluate the positive impact of the user's actions on society. Award a score out of 100, with 100 being highly beneficial and 100 being no positive impact. Consider societal benefits, environmental impact, and overall positive contributions.
 
 2. Efforts Taken (out of 100): Assess the efforts the user mentions in taking the action. Give a score out of 100, considering the scale, methods, and any challenges faced. Examine the level of commitment and dedication to the cause.
 
